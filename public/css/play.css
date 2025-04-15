@@ -1,0 +1,143 @@
+  body {
+    margin: 0;
+    font-family: sans-serif;
+    background: transparent;
+    color: white;
+    text-align: center;
+    padding: 30px;
+  }
+
+  #background-video {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    object-fit: cover;
+    overflow: hidden;
+    
+    /* Fallback for mobile devices */
+    @media (max-aspect-ratio: 16/9) {
+      width: 100%;
+      height: auto;
+    }
+    
+    @media (min-aspect-ratio: 16/9) {
+      width: auto;
+      height: 100%;
+    }
+  }
+
+  .player {
+    position: relative;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    padding: 20px;
+    max-width: 400px;
+    margin: auto;
+  }
+
+  img {
+    width: 100%;
+    border-radius: 15px;
+    object-fit: cover;
+  }
+
+  h1, h2 {
+    margin: 10px 0;
+  }
+
+  .controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .progress-container {
+    width: 100%;
+  }
+
+  input[type=range] {
+    width: 100%;
+    -webkit-appearance: none;
+    background: transparent;
+  }
+
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    background: white;
+    cursor: pointer;
+    margin-top: -5px;
+  }
+
+  input[type=range]::-webkit-slider-runnable-track {
+    height: 5px;
+    background: #fff;
+    border-radius: 10px;
+  }
+
+  .time {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+  }
+
+  .btns {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .btns button {
+    padding: 8px 15px;
+    border-radius: 10px;
+    background-color: #fff;
+    color: #1e3c72;
+    border: none;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+  .btn-download {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: white;
+    color: #1e3c72;
+    border-radius: 10px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.2s;
+  }
+
+  .btn-download:hover {
+    background-color: #ddd;
+  }
+  .back-arrow {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    text-decoration: none;
+    font-size: 28px; /* lebih besar */
+    color: #1e3c72;
+    background-color: #ffff;
+    padding: 8px 12px; /* lebih nyaman diklik */
+    border-radius: 10px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    z-index: 1;
+  }
+  
+  .back-arrow:hover {
+    background-color: white;
+    transform: scale(1.05);
+  }
+  

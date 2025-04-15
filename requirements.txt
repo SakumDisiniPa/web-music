@@ -1,0 +1,12 @@
+yt-dlp
+flask
+pymysql
+requests
+spotipy
+youtube-search-python
+youtube_search
+bcrypt
+google-api-python-client
+werkzeug
+flask-minify
+python-dotenv

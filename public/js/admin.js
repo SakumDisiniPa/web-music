@@ -1,0 +1,2 @@
+// admin.min.js
+fetch('/tracks').then(res=>res.json()).then(data=>{const container=document.getElementById('playlist-container');data.forEach(lagu=>{const div=document.createElement('div');div.className='playlist-card';div.innerHTML=`<a href="/public/edit.html?id=${lagu.id}"><img src="${lagu.image}" alt="${lagu.name}"><div class="info"><h3>${lagu.name}</h3><p>${lagu.artist}</p></div></a>`;container.appendChild(div)})}).catch(err=>{console.error(err);alert('Gagal memuat lagu.')});

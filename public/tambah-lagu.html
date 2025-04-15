@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <title>Admin Lagu</title>
+  <link rel="stylesheet" href="/public/css/tambah-lagu.css">
+</head>
+<body>
+  <header>
+    <h1>🎵 Tambah Lagu</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/admin">Admin</a>
+    </nav>
+  </header>
+
+  <div class="tabs">
+    <button class="tab-button active" data-tab="youtube">YouTube</button>
+    <button class="tab-button" data-tab="spotify">Spotify</button>
+    <button class="tab-button" data-tab="playlist">Playlist</button>
+  </div>
+
+  <!-- Tab YouTube -->
+  <div id="youtube-tab" class="tab-content active">
+    <h2>Tambah Lagu dari YouTube</h2>
+    <form id="youtubeForm">
+      <div class="form-group">
+        <label for="youtubeUrl">Link YouTube:</label>
+        <input type="url" id="youtubeUrl" placeholder="https://www.youtube.com/watch?v=xxxx" required />
+      </div>
+      <button type="submit" id="youtubeDownloadBtn" class="btn">Download dari YouTube</button>
+      <p class="info-text">Metadata akan diambil otomatis dari YouTube</p>
+    </form>
+  </div>
+
+  <!-- Tab Spotify -->
+  <div id="spotify-tab" class="tab-content">
+    <h2>Tambah Lagu dari Spotify</h2>
+    <form id="spotifyForm">
+      <div class="form-group">
+        <label for="spotifyUrl">Link Spotify:</label>
+        <input type="url" id="spotifyUrl" placeholder="https://open.spotify.com/track/xxxx" required />
+      </div>
+      <button type="submit" id="spotifyDownloadBtn" class="btn">Download dari Spotify</button>
+      <p class="info-text">Metadata akan diambil otomatis dari Spotify</p>
+    </form>
+  </div>
+
+  <!-- Tab Playlist -->
+  <div id="playlist-tab" class="tab-content">
+    <h2>Download Playlist</h2>
+    <form id="playlistForm">
+      <div class="form-group">
+        <label for="playlistUrl">Link Playlist:</label>
+        <input type="url" id="playlistUrl" 
+               placeholder="https://open.spotify.com/playlist/xxx atau https://youtube.com/playlist?list=xxx" 
+               required />
+      </div>
+      <button type="submit" id="playlistDownloadBtn" class="btn">Download Playlist</button>
+      <p class="info-text">Support Spotify, YouTube, dan YouTube Music playlists</p>
+    </form>
+
+    <div id="playlistProgress" class="progress-container" style="display: none;">
+      <div class="progress-info">
+        <div id="progressBar" class="progress-bar"></div>
+      </div>
+      <p id="progressText" class="progress-text">Memulai proses...</p>
+      <button id="cancelBtn" class="btn-cancel" style="display: none;">Batalkan</button>
+    </div>
+
+    <div id="playlistResults" class="playlist-results"></div>
+  </div>
+
+  <div id="result" class="result-container"></div>
+
+  <!-- Loading Spinner -->
+  <div id="loadingSpinner" class="loading-spinner" style="display: none;">
+    <div class="spinner"></div>
+    <p>Memproses...</p>
+  </div>
+
+  <script src="/public/js/tambah-lagu.js"></script>
+</body>
+</html>

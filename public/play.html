@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🎵 {{ current_track_title }} - {{ current_track_artist }}</title>
+  <link rel="stylesheet" href="/public/css/play.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <!-- Tambahan meta tags untuk social media dan SEO -->
+  <meta property="og:title" content="{{ current_track_title }} - {{ current_track_artist }}">
+  <meta property="og:description" content="Sedang memutar {{ current_track_title }} oleh {{ current_track_artist }}">
+  <meta property="og:image" content="{{ current_track_thumbnail }}">
+  <meta property="og:url" content="{{ current_url }}">
+  <meta name="theme-color" content="#1DB954"> <!-- Warna tema player -->
+  
+  <!-- Preload resources untuk performa lebih baik -->
+  <link rel="preload" href="{{ current_track_audio_url }}" as="audio">
+  <link rel="preload" href="{{ current_track_thumbnail }}" as="image">
+</head>
+<body>
+
+  <!-- Video background dengan fallback -->
+  <video autoplay muted loop playsinline id="background-video" aria-hidden="true">
+    <source src="/data/background/background.mp4" type="video/mp4">
+    <source src="/data/background/background.webm" type="video/webm">
+    Your browser does not support HTML5 video.
+  </video>
+
+  <!-- Player UI dengan ARIA attributes untuk aksesibilitas -->
+  <div class="player" role="application" aria-label="Pemutar Musik">
+    <a href="/" class="back-arrow" aria-label="Kembali">⬅</a>
+    
+    <div class="cover-container">
+      <img id="cover" src="{{ current_track_thumbnail }}" 
+           alt="Sampul album untuk {{ current_track_title }}" 
+           onerror="this.src='/public/thumbs/default.jpg'"
+           aria-hidden="true">
+    </div>
+    
+    <div class="track-info">
+      <h1 id="title" aria-live="polite">{{ current_track_title }}</h1>
+      <h2 id="artist" aria-live="polite">{{ current_track_artist }}</h2>
+    </div>
+
+    <div class="controls">
+      <div class="progress-container">
+        <input type="range" id="seekbar" value="0" step="1" 
+               aria-label="Progress lagu" aria-valuetext="0 menit 0 detik">
+        <div class="time" aria-hidden="true">
+          <span id="currentTime">00:00</span>
+          <span id="duration">00:00</span>
+        </div>
+      </div>
+      
+      <div class="btns">
+        <button onclick="previousTrack()" aria-label="Lagu sebelumnya">⏮</button>
+        <button onclick="togglePlay()" id="playBtn" aria-label="Mainkan">▶</button>
+        <button onclick="nextTrack()" aria-label="Lagu berikutnya">⏭</button>
+      </div>
+    </div>
+
+    <!-- Tombol download -->
+    <a id="downloadBtn" href="{{ current_track_audio_url }}" download 
+       class="btn-download" aria-label="Unduh lagu">
+      ⬇ Download
+    </a>
+
+    <audio id="audio" src="{{ current_track_audio_url }}" preload="metadata" autoplay></audio>
+  </div>
+
+  <!-- Data playlist dan inisialisasi -->
+  <script>
+    window.playlistData = {
+      tracks: {{ playlist | tojson }},
+      currentIndex: {{ current_index }},
+      currentUrl: window.location.href
+    };
+    
+    // Fallback untuk browser yang tidak support modules
+    if (!window.Promise || !window.fetch) {
+      document.write('<script src="/public/js/polyfills.js"><\/script>');
+    }
+  </script>
+  
+  <!-- Load JavaScript -->
+  <script src="/public/js/play.js" defer></script>
+  
+  <!-- Analytics (opsional) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'GA_MEASUREMENT_ID');
+  </script>
+</body>
+</html>

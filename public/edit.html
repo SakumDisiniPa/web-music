@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Lagu</title>
+    <link rel="stylesheet" href="/public/css/edit.css" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
+<body>
+    <form id="formEdit" enctype="multipart/form-data" method="POST" action="">
+        <div class="edit-container">
+            <h1>Edit Lagu</h1>
+    
+            <div class="thumbnail-container">
+                <div class="thumbnail-preview" id="thumbnailPreview">
+                    <span>Thumbnail akan muncul di sini</span>
+                </div>
+                <div>
+                    <button class="btn btn-upload" onclick="document.getElementById('fileInput').click(); return false;">Unggah Thumbnail</button>
+                    <input type="file" name="thumbnail" id="fileInput" accept="image/*" style="display: none;" onchange="unggahThumbnail(this)">
+                </div>
+            </div>
+    
+            <!-- input lainnya tetap -->
+            <div class="form-group">
+                <label for="judulLagu">Judul Lagu <span class="change-indicator" id="indikatorJudul">*</span></label>
+                <input type="text" name="judul" id="judulLagu" oninput="cekPerubahan()">
+            </div>
+            
+            <div class="form-group">
+                <label for="namaArtis">Artis <span class="change-indicator" id="indikatorArtis">*</span></label>
+                <input type="text" name="artis" id="namaArtis" oninput="cekPerubahan()">
+            </div>
+            
+            <div class="form-group">
+                <label for="deskripsiLagu">Deskripsi <span class="change-indicator" id="indikatorDeskripsi">*</span></label>
+                <textarea name="deskripsi" id="deskripsiLagu" oninput="cekPerubahan()"></textarea>
+            </div>
+    
+            <div class="button-group">
+                <button class="btn btn-back" onclick="kembaliKeAdmin(); return false;">Kembali</button>
+                <div>
+                    <button class="btn btn-delete" onclick="konfirmasiHapus(); return false;">Hapus</button>
+                    <button class="btn btn-save" id="tombolSimpan" disabled onclick="simpanPerubahan(); return false;">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </form>    
+    <script src="/public/js/edit.js"></script>
+</body>
+</html>

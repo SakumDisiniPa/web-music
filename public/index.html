@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Music App</title>
+  <link rel="stylesheet" href="/public/css/style.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body id="hiddenContent" style="display:none;">
+
+  <!-- Video background -->
+  <video autoplay muted loop playsinline id="background-video">
+    <source src="/data/background/background.mp4" type="video/mp4">
+    Your browser does not support HTML5 video.
+  </video>
+
+  <header>
+    <h1>🎵 My Music</h1>
+    <div class="nav-search-wrapper">
+      <nav>
+        <a href="/">Home</a>
+        <a href="/admin">Admin</a>
+      </nav>
+      <form class="search-form" id="search-form">
+        <input type="text" class="search-input" id="search-input" placeholder="Cari musik...">
+        <button type="submit" class="search-button">Cari</button>
+      </form>
+      
+      <!-- Bagian Auth/Profile -->
+      <div id="user-auth-section">
+        <div class="auth-buttons">
+          <a href="/register" class="signup-button">Sign Up</a>
+          <a href="/login" class="login-button">Sign In</a>
+        </div>
+        <div class="profile-dropdown" id="profile-dropdown">
+          <button class="profile-button" id="profile-button">
+            <span id="username-display">Username</span>
+            <i class="fas fa-caret-down"></i>
+          </button>
+          <div class="dropdown-content" id="dropdown-content">
+            <a href="/my-account"><i class="fas fa-user"></i> My Account</a>
+            <a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <!-- Sidebar Playlist -->
+    <aside class="playlist-sidebar">
+      <h2>Music</h2>
+      <div id="playlist-sidebar" class="playlist-sidebar-list">
+        <!-- Diisi lewat JS -->
+      </div>
+    </aside>
+  
+    <!-- Konten Musik -->
+    <section class="music-content">
+      <div class="tabs">
+        <button class="tab-button active" data-tab="all">Semua Lagu</button>
+        <button class="tab-button" data-tab="favorites">Favorit</button>
+        <button class="tab-button" data-tab="newest">Playlist</button>
+      </div>
+  
+      <div id="all-tab" class="tab-content active">
+        <h2>🎧 Semua Lagu</h2>
+        <div class="playlist-container" id="playlist-container">
+          <!-- Lagu dimuat lewat JS -->
+        </div>
+      </div>
+  
+      <div id="favorites-tab" class="tab-content">
+        <h2>⭐ Favorit</h2>
+        <div class="playlist-container" id="favorites-container">
+          <!-- Isi favorit lewat JS -->
+        </div>
+      </div>
+  
+      <div id="newest-tab" class="tab-content">
+        <h2>🎧 Playlist</h2>
+        <div class="playlist-container" id="newest-container">
+          <!-- Isi terbaru lewat JS -->
+        </div>
+      </div>
+    </section>
+  </main>  
+
+  <!-- Script -->
+  <script src="/public/js/index.js?v=1.0.1"></script>
+  <script>
+    document.getElementById("hiddenContent").style.display = "block";
+  </script>  
+</body>
+</html>

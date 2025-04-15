@@ -1,0 +1,198 @@
+body {
+    font-family: sans-serif;
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  header {
+    background-color: #1db954;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  nav a {
+    color: white;
+    margin-left: 15px;
+    text-decoration: none;
+  }
+  input, button {
+    display: block;
+    margin-top: 1rem;
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  button {
+    background-color: #1DB954;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  button:hover {
+    background-color: #1ed760;
+  }
+  button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+  .tab-content {
+    display: none;
+  }
+  .tab-content.active {
+    display: block;
+  }
+  .tabs {
+    display: flex;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #ddd;
+  }
+  .tab-button {
+    padding: 0.75rem 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    color: #666;
+    position: relative;
+  }
+  .tab-button.active {
+    color: #1DB954;
+  }
+  .tab-button.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background-color: #1DB954;
+  }
+  #result {
+    margin-top: 2rem;
+    padding: 1rem;
+    border-radius: 4px;
+  }
+  .success {
+    background-color: #e6ffed;
+    color: #1DB954;
+    border: 1px solid #1DB954;
+  }
+  .error {
+    background-color: #ffebee;
+    color: #f44336;
+    border: 1px solid #f44336;
+  }
+  .loading {
+    background-color: #e3f2fd;
+    color: #2196f3;
+    border: 1px solid #2196f3;
+  }
+  .track-info {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+  }
+  .track-info img {
+    max-width: 200px;
+    margin-top: 1rem;
+    border-radius: 4px;
+    display: block;
+  }
+  .info-text {
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 0.5rem;
+  }
+  /* CSS inline untuk elemen penting */
+  .progress-container {
+    width: 100%;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    margin: 15px 0;
+    overflow: hidden;
+  }
+  
+  .progress-bar {
+    height: 20px;
+    background-color: #4CAF50;
+    width: 0%;
+    transition: width 0.3s ease;
+  }
+  
+  .progress-text {
+    text-align: center;
+    margin: 5px 0;
+    color: #555;
+    font-size: 14px;
+  }
+  
+  .playlist-results {
+    margin-top: 20px;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+  }
+  
+  .track-info {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 10px 0;
+    border-left: 4px solid #4CAF50;
+  }
+  
+  .error {
+    color: #e74c3c;
+    padding: 8px 12px;
+    background: #fdecea;
+    border-radius: 4px;
+    margin: 5px 0;
+  }
+  
+  .success {
+    color: #2ecc71;
+    padding: 10px;
+    background: #e8f8f0;
+    border-radius: 4px;
+    margin: 10px 0;
+  }
+  
+  .loading {
+    color: #3498db;
+    padding: 10px;
+    background: #ebf5fb;
+    border-radius: 4px;
+    margin: 10px 0;
+  }
+  .btn-cancel {
+    background: #e74c3c;
+    margin-top: 10px;
+  }
+  
+  /* Loading Spinner */
+  .loading-spinner {
+    text-align: center;
+    margin: 20px 0;
+  }
+  
+  .spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border-left-color: #09f;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
