@@ -34,7 +34,7 @@ Aplikasi web musik berbasis **Flask** Python yang memungkinkan pengguna untuk me
    ```bash
    git clone https://github.com/SakumDisiniPa/web-music.git
    cd web-music
-````
+   ```
 
 2. **Import table ke database**
 
