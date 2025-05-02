@@ -179,19 +179,23 @@ Berikut beberapa tampilan dari aplikasi:
 
 ### 🎵 Halaman Utama
 
-![Tampilan Desktop](screenshot/desktop.png)
-![Tampilan Mobile](screenshot/mobile.png)
+<div align="center">
+  <img src="screenshot/desktop.png" alt="Tampilan Desktop" width="45%">
+  <img src="screenshot/mobile.png" alt="Tampilan Mobile" width="45%">
+</div>
 
 ### 🎧 Halaman Pemutar Lagu
 
-![Pemutar lagu Desktop](screenshot/play-desktop.png)
-![Pemutar lagu Mobile](screenshot/play-mobile.png)
+<div align="center">
+  <img src="screenshot/play-desktop.png" alt="Pemutar Desktop" width="45%">
+  <img src="screenshot/play-mobile.png" alt="Pemutar Mobile" width="45%">
+</div>
 
 ### 🛠️ Halaman Admin Panel
 
-![Admin Panel](screenshot/admin.png)
-
----
+<div align="center">
+  <img src="screenshot/admin.png" alt="Admin Panel" width="80%">
+</div>
 
 ## 📄 [Lisensi](https://github.com/SakumDisiniPa/web-music/blob/main/LICENSE)
 
