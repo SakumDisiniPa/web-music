@@ -104,33 +104,34 @@ youtubeForm.addEventListener('submit', async (e) => {
             throw new Error(metadata.error || 'Metadata tidak valid');
         }
 
-        // Validate required fields
-        if (!metadata.judul || !metadata.artis) {
-            throw new Error('Metadata tidak lengkap (judul atau artis tidak ada)');
-        }
+        // Gunakan nilai default jika metadata tidak lengkap
+        const judul = metadata.judul || 'Tidak diketahui';
+        const artis = metadata.artis || 'Tidak diketahui';
+        const deskripsi = metadata.deskripsi || '';
+        const thumbnail = metadata.thumbnail || '/default-thumbnail.jpg';
 
-        // Step 2: Upload with metadata
+        // Step 2: Upload with fallback metadata
         const uploadRes = await fetch('/admin/upload', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 url: youtubeUrl,
-                judul: metadata.judul,
-                artis: metadata.artis,
-                deskripsi: metadata.deskripsi || '',
-                thumbnail: metadata.thumbnail || ''
+                judul: judul,
+                artis: artis,
+                deskripsi: deskripsi,
+                thumbnail: thumbnail
             })
         });
 
         const data = await uploadRes.json();
         
         if (uploadRes.ok && data.success) {
-            // Prepare complete track info
+            // Siapkan informasi lagu lengkap untuk ditampilkan
             const trackInfo = {
-                judul: data.judul || metadata.judul,
-                artis: data.artis || metadata.artis,
-                deskripsi: data.deskripsi || metadata.deskripsi || '',
-                thumbnail: data.thumbnail || metadata.thumbnail || '/default-thumbnail.jpg'
+                judul: data.judul || judul,
+                artis: data.artis || artis,
+                deskripsi: data.deskripsi || deskripsi,
+                thumbnail: data.thumbnail || thumbnail
             };
             
             resultDiv.innerHTML = `
@@ -148,6 +149,7 @@ youtubeForm.addEventListener('submit', async (e) => {
         youtubeDownloadBtn.disabled = false;
     }
 });
+
 
 // Spotify Form Handler
 spotifyForm.addEventListener('submit', async (e) => {

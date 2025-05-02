@@ -26,27 +26,6 @@ Aplikasi web musik berbasis **Flask** Python yang memungkinkan pengguna untuk me
 
 ---
 
-## 🧩 Struktur Tabel Untuk Menyimpan Music
-
-| No | Kolom              | Tipe Data      | Nullable | Default Value       | Keterangan                                   |
-|----|--------------------|----------------|----------|---------------------|----------------------------------------------|
-| 1  | `id`               | `int(11)`      | Tidak    | `AUTO_INCREMENT`     | ID utama, unik untuk setiap lagu             |
-| 2  | `judul`            | `varchar(255)`  | Tidak    | Tidak ada            | Judul lagu                                   |
-| 3  | `artis`            | `varchar(255)`  | Ya       | `NULL`               | Nama artis atau penyanyi                     |
-| 4  | `deskripsi`        | `text`          | Ya       | `NULL`               | Deskripsi lagu                               |
-| 5  | `nama_file_audio`  | `varchar(255)`  | Tidak    | Tidak ada            | Nama file audio yang diunduh                 |
-| 6  | `thumbnail`        | `varchar(255)`  | Ya       | `NULL`               | URL atau path thumbnail lagu                 |
-| 7  | `tanggal_upload`   | `datetime`      | Ya       | `current_timestamp()` | Waktu pengunggahan lagu                      |
-| 8  | `is_public`        | `tinyint(1)`    | Ya       | `1`                  | Status publikasi lagu                        |
-| 9  | `visibility`       | `varchar(10)`   | Ya       | `public`             | Visibilitas (public/private)                 |
-| 10 | `duration`         | `int(11)`       | Ya       | `0`                  | Durasi lagu dalam detik                      |
-| 11 | `plays`            | `int(11)`       | Ya       | `0`                  | Jumlah pemutaran lagu                        |
-| 12 | `likes`            | `int(11)`       | Ya       | `0`                  | Jumlah suka                                  |
-| 13 | `playlist_id`      | `int(11)`       | Ya       | `NULL`               | ID playlist terkait                          |
-| 14 | `random_id`        | `varchar(16)`   | Ya       | `NULL`               | ID acak lagu                                 |
-
----
-
 ## 🚀 Instalasi
 
 1. **Clone Repository**
@@ -68,17 +47,7 @@ Aplikasi web musik berbasis **Flask** Python yang memungkinkan pengguna untuk me
    pip install -r requirements.txt
    ```
 
-4. **Buat file `.env`**
-   ```env
-   DB_HOST=localhost #sesuai host 
-   DB_USER=root #sesuaikan user 
-   DB_PASSWORD=#password kamu jika tidak ada kosongkan saja
-   DB_NAME=#nama database kamu
-    
-    SPOTIFY_CLIENT_ID=xxxxxxxxxxxxxxxxxxxx
-    SPOTIFY_CLIENT_SECRET=xxxxxxxxxxxxxxxxxxxxx
-    YOUTUBE_API_KEY=xxxxxxxxxxxxxxxxxxxx
-   ```
+4. **Edit file `.env`**
 
 5. **Jalankan aplikasinya**
    ```bash

@@ -3,50 +3,568 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Lagu</title>
-    <link rel="stylesheet" href="/public/css/edit.css" />
+    <title>Edit Lagu | SakumStreaming</title>
+    <link rel="stylesheet" href="/public/css/edit.css">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Loading overlay styles */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        .loading-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .fa-spinner {
+            font-size: 2rem;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Message styles */
+        .message {
+            padding: 12px 20px;
+            border-radius: 5px;
+            margin: 15px 0;
+            display: none;
+            font-weight: 500;
+        }
+        
+        .error-message {
+            background-color: #ffebee;
+            color: #c62828;
+            border-left: 4px solid #c62828;
+        }
+        
+        .success-message {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border-left: 4px solid #2e7d32;
+        }
+        
+        /* Form styles */
+        .edit-container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .edit-container h1 {
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .thumbnail-container {
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .thumbnail-preview {
+            width: 200px;
+            height: 200px;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background-color: #f9f9f9;
+            position: relative;
+        }
+        
+        .thumbnail-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        
+        .btn-upload {
+            background-color: #4285f4;
+            color: white;
+        }
+        
+        .btn-upload:hover {
+            background-color: #3367d6;
+        }
+        
+        .btn-reset {
+            background-color: #f4b400;
+            color: white;
+        }
+        
+        .btn-reset:hover {
+            background-color: #db9b00;
+        }
+        
+        .btn-save {
+            background-color: #0f9d58;
+            color: white;
+        }
+        
+        .btn-save:hover {
+            background-color: #0b8043;
+        }
+        
+        .btn-delete {
+            background-color: #db4437;
+            color: white;
+        }
+        
+        .btn-delete:hover {
+            background-color: #c1351b;
+        }
+        
+        .btn-back {
+            background-color: #757575;
+            color: white;
+        }
+        
+        .btn-back:hover {
+            background-color: #616161;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .form-group input[type="text"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border 0.2s;
+        }
+        
+        .form-group input[type="text"]:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #4285f4;
+            outline: none;
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .change-indicator {
+            color: #db4437;
+            font-size: 0.8rem;
+            display: none;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .edit-container {
+                padding: 20px;
+                margin: 15px;
+            }
+            
+            .thumbnail-preview {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <form id="formEdit" enctype="multipart/form-data" method="POST" action="">
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <i class="fas fa-spinner fa-spin"></i>
+            <span>Memproses...</span>
+        </div>
+    </div>
+
+    <form id="formEdit" enctype="multipart/form-data" method="POST">
         <div class="edit-container">
-            <h1>Edit Lagu</h1>
+            <h1><i class="fas fa-edit"></i> Edit Lagu</h1>
+            
+            <div id="errorMessage" class="message error-message"></div>
+            <div id="successMessage" class="message success-message"></div>
     
             <div class="thumbnail-container">
                 <div class="thumbnail-preview" id="thumbnailPreview">
-                    <span>Thumbnail akan muncul di sini</span>
+                    <img id="currentThumbnail" src="" alt="Current Thumbnail" style="display: none; width: 100%; height: 100%; object-fit: cover;">
+                    <span id="thumbnailPlaceholder"><i class="fas fa-image" style="font-size: 2rem; color: #ccc;"></i><br>Thumbnail saat ini</span>
                 </div>
-                <div>
-                    <button class="btn btn-upload" onclick="document.getElementById('fileInput').click(); return false;">Unggah Thumbnail</button>
-                    <input type="file" name="thumbnail" id="fileInput" accept="image/*" style="display: none;" onchange="unggahThumbnail(this)">
+                <div class="thumbnail-actions">
+                    <button type="button" class="btn btn-upload" onclick="document.getElementById('fileInput').click()">
+                        <i class="fas fa-upload"></i> Unggah Thumbnail Baru
+                    </button>
+                    <input type="file" name="thumbnail" id="fileInput" accept="image/*" style="display: none;" onchange="handleThumbnailUpload(this)">
+                    <button type="button" class="btn btn-reset" id="resetThumbnailBtn" style="display: none;" onclick="resetThumbnail()">
+                        <i class="fas fa-undo"></i> Reset
+                    </button>
                 </div>
             </div>
     
-            <!-- input lainnya tetap -->
             <div class="form-group">
-                <label for="judulLagu">Judul Lagu <span class="change-indicator" id="indikatorJudul">*</span></label>
-                <input type="text" name="judul" id="judulLagu" oninput="cekPerubahan()">
+                <label for="judulLagu">
+                    <i class="fas fa-music"></i> Judul Lagu 
+                    <span class="change-indicator" id="indikatorJudul">*</span>
+                </label>
+                <input type="text" name="judul" id="judulLagu" required oninput="checkChanges()">
             </div>
             
             <div class="form-group">
-                <label for="namaArtis">Artis <span class="change-indicator" id="indikatorArtis">*</span></label>
-                <input type="text" name="artis" id="namaArtis" oninput="cekPerubahan()">
+                <label for="namaArtis">
+                    <i class="fas fa-user"></i> Artis 
+                    <span class="change-indicator" id="indikatorArtis">*</span>
+                </label>
+                <input type="text" name="artis" id="namaArtis" required oninput="checkChanges()">
             </div>
             
             <div class="form-group">
-                <label for="deskripsiLagu">Deskripsi <span class="change-indicator" id="indikatorDeskripsi">*</span></label>
-                <textarea name="deskripsi" id="deskripsiLagu" oninput="cekPerubahan()"></textarea>
+                <label for="genreLagu">
+                    <i class="fas fa-tag"></i> Genre
+                    <span class="change-indicator" id="indikatorGenre">*</span>
+                </label>
+                <select name="genre" id="genreLagu" onchange="checkChanges()">
+                    <option value="pop">Pop</option>
+                    <option value="rock">Rock</option>
+                    <option value="jazz">Jazz</option>
+                    <option value="classical">Classical</option>
+                    <option value="hiphop">Hip Hop</option>
+                    <option value="electronic">Electronic</option>
+                    <option value="rnb">R&B</option>
+                    <option value="country">Country</option>
+                    <option value="reggae">Reggae</option>
+                    <option value="indonesian">Indonesian</option>
+                    <option value="international">International</option>
+                    <option value="other">Lainnya</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="deskripsiLagu">
+                    <i class="fas fa-align-left"></i> Deskripsi 
+                    <span class="change-indicator" id="indikatorDeskripsi">*</span>
+                </label>
+                <textarea name="deskripsi" id="deskripsiLagu" rows="4" oninput="checkChanges()"></textarea>
             </div>
     
             <div class="button-group">
-                <button class="btn btn-back" onclick="kembaliKeAdmin(); return false;">Kembali</button>
-                <div>
-                    <button class="btn btn-delete" onclick="konfirmasiHapus(); return false;">Hapus</button>
-                    <button class="btn btn-save" id="tombolSimpan" disabled onclick="simpanPerubahan(); return false;">Simpan</button>
+                <button type="button" class="btn btn-back" onclick="window.location.href='/admin';">
+                    <i class="fas fa-arrow-left"></i> Kembali ke Admin
+                </button>
+                <div style="display: flex; gap: 10px;">
+                    <button type="button" class="btn btn-delete" onclick="confirmDelete()">
+                        <i class="fas fa-trash"></i> Hapus Lagu
+                    </button>
+                    <button type="submit" class="btn btn-save" id="tombolSimpan" disabled>
+                        <i class="fas fa-save"></i> Simpan Perubahan
+                    </button>
                 </div>
             </div>
+            
+            <input type="hidden" name="song_id" id="songId">
+            <input type="hidden" name="original_thumbnail" id="originalThumbnail">
         </div>
     </form>    
-    <script src="/public/js/edit.js"></script>
+    
+    <script>
+        // Global variables
+        let originalData = {};
+        let currentSongId = null;
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get song ID from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            currentSongId = urlParams.get('id');
+            
+            if (!currentSongId) {
+                showError('ID lagu tidak valid');
+                return;
+            }
+            
+            document.getElementById('songId').value = currentSongId;
+            loadSongData(currentSongId);
+        });
+        
+        // Load song data from API
+        function loadSongData(songId) {
+            showLoading(true);
+            
+            fetch(`/api/player/songs/${songId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Gagal memuat data lagu');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Store original data
+                    originalData = {
+                        judul: data.judul || data.title,
+                        artis: data.artis || data.artist,
+                        genre: data.genre || 'other',
+                        deskripsi: data.deskripsi || data.description,
+                        thumbnail: data.thumbnail || (data.cover_url ? data.cover_url.replace('/public/thumbs/', '') : '')
+                    };
+                    
+                    // Populate form fields
+                    document.getElementById('judulLagu').value = originalData.judul;
+                    document.getElementById('namaArtis').value = originalData.artis;
+                    document.getElementById('genreLagu').value = originalData.genre;
+                    document.getElementById('deskripsiLagu').value = originalData.deskripsi;
+                    document.getElementById('originalThumbnail').value = originalData.thumbnail;
+                    
+                    // Display current thumbnail
+                    if (originalData.thumbnail) {
+                        const thumbnailImg = document.getElementById('currentThumbnail');
+                        thumbnailImg.src = `/public/thumbs/${originalData.thumbnail}`;
+                        thumbnailImg.style.display = 'block';
+                        document.getElementById('thumbnailPlaceholder').style.display = 'none';
+                    }
+                    
+                    showLoading(false);
+                })
+                .catch(error => {
+                    showError(error.message);
+                    showLoading(false);
+                });
+        }
+        
+        // Handle thumbnail upload
+        function handleThumbnailUpload(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                const placeholder = document.getElementById('thumbnailPlaceholder');
+                const currentThumbnail = document.getElementById('currentThumbnail');
+                const resetBtn = document.getElementById('resetThumbnailBtn');
+                
+                reader.onload = function(e) {
+                    currentThumbnail.src = e.target.result;
+                    currentThumbnail.style.display = 'block';
+                    placeholder.style.display = 'none';
+                    resetBtn.style.display = 'inline-block';
+                    checkChanges();
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        
+        // Reset thumbnail to original
+        function resetThumbnail() {
+            const fileInput = document.getElementById('fileInput');
+            const resetBtn = document.getElementById('resetThumbnailBtn');
+            const currentThumbnail = document.getElementById('currentThumbnail');
+            const placeholder = document.getElementById('thumbnailPlaceholder');
+            
+            fileInput.value = '';
+            resetBtn.style.display = 'none';
+            
+            if (originalData.thumbnail) {
+                currentThumbnail.src = `/public/thumbs/${originalData.thumbnail}`;
+                currentThumbnail.style.display = 'block';
+                placeholder.style.display = 'none';
+            } else {
+                currentThumbnail.style.display = 'none';
+                placeholder.style.display = 'block';
+            }
+            
+            checkChanges();
+        }
+        
+        // Check for changes in form
+        function checkChanges() {
+            const saveBtn = document.getElementById('tombolSimpan');
+            const fileInput = document.getElementById('fileInput');
+            
+            const currentData = {
+                judul: document.getElementById('judulLagu').value,
+                artis: document.getElementById('namaArtis').value,
+                genre: document.getElementById('genreLagu').value,
+                deskripsi: document.getElementById('deskripsiLagu').value,
+                thumbnailChanged: fileInput.files.length > 0
+            };
+            
+            // Check if any field has changed
+            const hasChanged = (
+                currentData.judul !== originalData.judul ||
+                currentData.artis !== originalData.artis ||
+                currentData.genre !== originalData.genre ||
+                currentData.deskripsi !== originalData.deskripsi ||
+                currentData.thumbnailChanged
+            );
+            
+            // Update indicators
+            document.getElementById('indikatorJudul').style.display = 
+                currentData.judul !== originalData.judul ? 'inline' : 'none';
+            document.getElementById('indikatorArtis').style.display = 
+                currentData.artis !== originalData.artis ? 'inline' : 'none';
+            document.getElementById('indikatorGenre').style.display = 
+                currentData.genre !== originalData.genre ? 'inline' : 'none';
+            document.getElementById('indikatorDeskripsi').style.display = 
+                currentData.deskripsi !== originalData.deskripsi ? 'inline' : 'none';
+            
+            saveBtn.disabled = !hasChanged;
+        }
+        
+        // Handle form submission
+        document.getElementById('formEdit').addEventListener('submit', function(e) {
+            e.preventDefault();
+            showLoading(true);
+            
+            const formData = new FormData(this);
+            
+            fetch('/api/player/songs/update', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => { throw new Error(err.message || 'Gagal memperbarui lagu'); });
+                }
+                return response.json();
+            })
+            .then(data => {
+                showSuccess('Perubahan berhasil disimpan!');
+                // Update original data with new values
+                originalData = {
+                    judul: document.getElementById('judulLagu').value,
+                    artis: document.getElementById('namaArtis').value,
+                    genre: document.getElementById('genreLagu').value,
+                    deskripsi: document.getElementById('deskripsiLagu').value,
+                    thumbnail: data.thumbnail || originalData.thumbnail
+                };
+                
+                // Reset thumbnail if it was changed
+                if (document.getElementById('fileInput').files.length > 0) {
+                    document.getElementById('fileInput').value = '';
+                    document.getElementById('resetThumbnailBtn').style.display = 'none';
+                    
+                    if (originalData.thumbnail) {
+                        document.getElementById('currentThumbnail').src = `/public/thumbs/${originalData.thumbnail}`;
+                    }
+                }
+                
+                checkChanges(); // This will disable the save button again
+                showLoading(false);
+            })
+            .catch(error => {
+                showError(error.message);
+                showLoading(false);
+            });
+        });
+        
+        // Confirm delete action
+        function confirmDelete() {
+            if (confirm('Apakah Anda yakin ingin menghapus lagu ini? Aksi ini tidak dapat dibatalkan.')) {
+                showLoading(true);
+                
+                fetch(`/api/player/songs/${currentSongId}`, {
+                    method: 'DELETE'
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Gagal menghapus lagu');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    alert('Lagu berhasil dihapus');
+                    window.location.href = '/admin';
+                })
+                .catch(error => {
+                    showError(error.message);
+                    showLoading(false);
+                });
+            }
+        }
+        
+        // Helper functions
+        function showLoading(show) {
+            document.getElementById('loadingOverlay').style.display = show ? 'flex' : 'none';
+        }
+        
+        function showError(message) {
+            const errorElement = document.getElementById('errorMessage');
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+            
+            // Hide after 5 seconds
+            setTimeout(() => {
+                errorElement.style.display = 'none';
+            }, 5000);
+        }
+        
+        function showSuccess(message) {
+            const successElement = document.getElementById('successMessage');
+            successElement.textContent = message;
+            successElement.style.display = 'block';
+            
+            // Hide after 3 seconds
+            setTimeout(() => {
+                successElement.style.display = 'none';
+            }, 3000);
+        }
+    </script>
 </body>
 </html>

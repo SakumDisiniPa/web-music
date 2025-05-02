@@ -3,26 +3,297 @@
 <head>
   <meta charset="UTF-8">
   <title>Admin Panel - Musik Streaming</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="/public/css/style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/public/css/admin.css">
+  <style>
+    /* CSS Tambahan untuk Tab */
+    .tab-container {
+      margin-top: 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .tab-header {
+      display: flex;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .tab {
+      padding: 12px 20px;
+      cursor: pointer;
+      font-weight: 500;
+      color: #666;
+      transition: all 0.3s ease;
+      border-bottom: 3px solid transparent;
+    }
+    
+    .tab.active {
+      color: #4a6cf7;
+      border-bottom: 3px solid #4a6cf7;
+    }
+    
+    .tab-content {
+      display: none;
+      padding: 20px;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    /* CSS untuk Tabel Pengguna */
+    .users-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .users-table th {
+      background: #f5f7ff;
+      padding: 12px 15px;
+      text-align: left;
+      font-weight: 600;
+    }
+    
+    .users-table td {
+      padding: 12px 15px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    
+    .badge {
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    
+    .badge-active {
+      background: #e6f7ee;
+      color: #28a745;
+    }
+    
+    .badge-inactive {
+      background: #fee;
+      color: #dc3545;
+    }
+    
+    .btn {
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 13px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.3s;
+    }
+    
+    .btn-edit {
+      background: #4a6cf7;
+      color: white;
+      margin-right: 5px;
+    }
+    
+    .btn-delete {
+      background: #dc3545;
+      color: white;
+    }
+    
+    .btn:hover {
+      opacity: 0.9;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>🎵 Musik Admin</h1>
-    <nav>
-      <a href="/">Dashboard</a>
-      <a href="/tambah-lagu">Tambah Lagu</a>
-    </nav>
-  </header>
+  <div class="admin-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <i class="fas fa-headphones"></i>
+        <h1>MusikStream Admin</h1>
+      </div>
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a href="/admin" class="nav-link active" data-tab="dashboard">
+            <i class="fas fa-tachometer-alt"></i>
+            Dashboard
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/tambah-lagu" class="nav-link" data-tab="add-song">
+            <i class="fas fa-plus-circle"></i>
+            Tambah Lagu
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" data-tab="songs">
+            <i class="fas fa-music"></i>
+            Kelola Lagu
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" data-tab="users">
+            <i class="fas fa-users"></i>
+            Pengguna
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" data-tab="settings">
+            <i class="fas fa-cog"></i>
+            Pengaturan
+          </a>
+        </li>
+      </ul>
+    </aside>
 
-  <main>
-    <h2>Daftar Lagu</h2>
-    <div class="playlist-container" id="playlist-container">
-      <!-- Lagu akan dimuat lewat JS -->
-    </div>
-  </main>
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="header">
+        <h2 id="page-title">Dashboard Admin</h2>
+        <div class="user-info">
+          <img src="https://ui-avatars.com/api/?name=Admin&background=random" loading="lazy" alt="Admin">
+          <span>Admin</span>
+        </div>
+      </div>
+
+      <!-- Tab Navigation -->
+      <div class="tab-container">
+        <div class="tab-header">
+          <div class="tab active" data-tab="dashboard">Dashboard</div>
+          <div class="tab" data-tab="songs">Kelola Lagu</div>
+          <div class="tab" data-tab="users">Kelola Pengguna</div>
+        </div>
+        
+        <!-- Tab Contents -->
+        <div class="tab-content active" id="dashboard-tab">
+          <!-- Stats Cards -->
+          <div class="stats-container">
+            <div class="stat-card">
+              <i class="fas fa-music" style="color: var(--primary);"></i>
+              <div class="title">Total Lagu</div>
+              <div class="value" id="total-songs">0</div>
+            </div>
+            <div class="stat-card">
+              <i class="fas fa-users" style="color: var(--success);"></i>
+              <div class="title">Total Pengguna</div>
+              <div class="value" id="total-users">0</div>
+            </div>
+            <div class="stat-card">
+              <i class="fas fa-play-circle" style="color: var(--warning);"></i>
+              <div class="title">Total Diputar</div>
+              <div class="value" id="total-plays">0</div>
+            </div>
+            <div class="stat-card">
+              <i class="fas fa-heart" style="color: var(--danger);"></i>
+              <div class="title">Total Likes</div>
+              <div class="value" id="total-likes">0</div>
+            </div>
+          </div>
+
+          <!-- Add New Song Button -->
+          <a href="/tambah-lagu" class="btn btn-add">
+            <i class="fas fa-plus"></i>
+            Tambah Lagu Baru
+          </a>
+
+          <!-- Recent Songs Table -->
+          <div class="songs-table">
+            <h3>Lagu Terbaru</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Judul</th>
+                  <th>Artis</th>
+                  <th>Genre</th>
+                  <th>Diputar</th>
+                  <th>Likes</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="songs-list">
+                <!-- Data akan diisi oleh JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+        
+        <!-- Songs Tab Content -->
+        <div class="tab-content" id="songs-tab">
+          <div class="action-buttons">
+            <a href="/tambah-lagu" class="btn btn-add">
+              <i class="fas fa-plus"></i>
+              Tambah Lagu Baru
+            </a>
+            <button class="btn btn-edit" id="bulk-edit-genre-btn">
+              <i class="fas fa-edit"></i>
+              Edit Genre Banyak Lagu
+            </button>
+          </div>
+          
+          <div class="songs-table">
+            <table>
+              <thead>
+                <tr>
+                  <th><input type="checkbox" id="select-all-songs"></th>
+                  <th>No</th>
+                  <th>Judul</th>
+                  <th>Artis</th>
+                  <th>Genre</th>
+                  <th>Diputar</th>
+                  <th>Likes</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="all-songs-list">
+                <!-- Data akan diisi oleh JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+        
+        <!-- Users Tab Content -->
+        <div class="tab-content" id="users-tab">
+          <div class="action-buttons">
+            <button class="btn btn-add" id="add-user-btn">
+              <i class="fas fa-plus"></i>
+              Tambah Pengguna Baru
+            </button>
+            <button class="btn btn-edit" id="export-users-btn">
+              <i class="fas fa-file-export"></i>
+              Ekspor Data Pengguna
+            </button>
+          </div>
+          
+          <div class="users-table-container">
+            <table class="users-table">
+              <thead>
+                <tr>
+                  <th>Avatar</th>
+                  <th>Username</th>
+                  <th>Email</th>
+                  <th>Status</th>
+                  <th>Tanggal Daftar</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="users-list">
+                <!-- Data akan diisi oleh JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
 
   <script src="/public/js/admin.js"></script>
 </body>

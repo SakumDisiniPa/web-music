@@ -1,0 +1,222 @@
+:root {
+    --primary: #4361ee;
+    --secondary: #3f37c9;
+    --dark: #1a1a2e;
+    --light: #f8f9fa;
+    --success: #4cc9f0;
+    --danger: #f72585;
+    --warning: #f8961e;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  body {
+    background-color: #f5f7fa;
+    color: #333;
+  }
+  
+  .admin-container {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    min-height: 100vh;
+  }
+  
+  /* Sidebar Styles */
+  .sidebar {
+    background: var(--dark);
+    color: white;
+    padding: 1.5rem 0;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    padding: 0 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .logo i {
+    font-size: 1.8rem;
+    margin-right: 10px;
+    color: var(--success);
+  }
+  
+  .logo h1 {
+    font-size: 1.3rem;
+    font-weight: 600;
+  }
+  
+  .nav-menu {
+    list-style: none;
+  }
+  
+  .nav-item {
+    margin-bottom: 5px;
+  }
+  
+  .nav-link {
+    display: flex;
+    align-items: center;
+    padding: 12px 1.5rem;
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  
+  .nav-link:hover, .nav-link.active {
+    background: rgba(255,255,255,0.1);
+    color: white;
+    border-left: 3px solid var(--success);
+  }
+  
+  .nav-link i {
+    margin-right: 10px;
+    font-size: 1.1rem;
+  }
+  
+  /* Main Content Styles */
+  .main-content {
+    padding: 2rem;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  
+  .header h2 {
+    font-size: 1.8rem;
+    color: var(--dark);
+  }
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-info img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  /* Stats Cards */
+  .stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .stat-card {
+    background: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+  }
+  
+  .stat-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .stat-card i {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+  }
+  
+  .stat-card .title {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 5px;
+  }
+  
+  .stat-card .value {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  
+  /* Songs Table */
+  .songs-table {
+    width: 100%;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+  }
+  
+  th {
+    background: var(--primary);
+    color: white;
+    font-weight: 500;
+  }
+  
+  tr:hover {
+    background: #f8f9fa;
+  }
+  
+  .btn {
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-edit {
+    background: var(--warning);
+    color: white;
+  }
+  
+  .btn-delete {
+    background: var(--danger);
+    color: white;
+    margin-left: 5px;
+  }
+  
+  .btn-add {
+    background: var(--success);
+    color: white;
+    padding: 10px 20px;
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .btn-add i {
+    margin-right: 8px;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .admin-container {
+      grid-template-columns: 1fr;
+    }
+    
+    .sidebar {
+      display: none;
+    }
+  }
+
+  

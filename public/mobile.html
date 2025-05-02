@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="id" itemscope itemtype="https://schema.org/WebApplication">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#121212">
+  
+  <!-- Primary Meta Tags -->
+  <title>Tunexa - Music Streaming Platform Terbaik di Indonesia | 2025</title>
+  <meta name="description" content="Dengarkan jutaan lagu gratis di Tunexa. Streaming musik online berkualitas tinggi, buat favorit, dan temukan lagu baru setiap hari.">
+  <meta name="keywords" content="musik online, streaming musik, lagu terbaru, tunexa">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://sakum.my.id/">
+  <meta property="og:title" content="Tunexa - Music Streaming Platform Terbaik">
+  <meta property="og:description" content="Streaming musik online gratis dengan kualitas tinggi di Tunexa">
+  <meta property="og:image" content="https://sakum.my.id/icon2">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://sakum.my.id/">
+  <meta property="twitter:title" content="Tunexa - Music Streaming Platform Terbaik">
+  <meta property="twitter:description" content="Streaming musik online gratis dengan kualitas tinggi di Tunexa">
+  <meta property="twitter:image" content="https://sakum.my.id/icon2">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <!-- Manifest -->
+  <link rel="manifest" href="/manifest.json">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="/public/css/mobile.css">
+  
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Tunexa",
+    "description": "Platform streaming musik online terbaik di Indonesia",
+    "applicationCategory": "MusicApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "IDR"
+    }
+  }
+  </script>
+</head>
+<body>
+  <!-- Animated Gradient Background -->
+  <div class="gradient-bg" aria-hidden="true"></div>
+
+  <!-- Hidden Audio Player -->
+  <audio id="audio-player" hidden aria-label="Audio player"></audio>
+
+  <!-- Header -->
+  <header role="banner">
+    <div class="logo-container" itemscope itemtype="https://schema.org/Organization">
+      <img src="/logo" loading="lazy" alt="Tunexa Logo" itemprop="logo">
+      <span class="logo-text" itemprop="name">Tunexa</span>
+    </div>
+    
+    <div class="mobile-header-controls">
+      <button class="mobile-search-btn" id="mobile-search-btn" aria-label="Search">
+        <i class="fas fa-search"></i>
+      </button>
+      
+      <div class="profile-dropdown">
+        <button class="mobile-profile" id="profile-button" aria-label="Profile">
+          <img src="/public/thumbs/default-avatar.jpg" alt="Profile" id="mobile-profile-avatar">
+        </button>
+        <div class="dropdown-content" id="dropdown-content">
+          <a href="/my-account"><i class="fas fa-user"></i> My Account</a>
+          <a href="/logout" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+      </div>
+      
+      <button class="mobile-menu-button" id="mobile-menu-btn" aria-label="Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu-content" id="mobile-menu-content">
+    <button class="mobile-menu-close" id="mobile-menu-close">
+      <i class="fas fa-times"></i>
+    </button>
+    
+    <a href="/" class="active" data-tab="recommended"><i class="fas fa-home"></i> Home</a>
+    <a href="/browse" data-tab="all"><i class="fas fa-compass"></i> Browse</a>
+    <a data-tab="favorites"><i class="fas fa-thumbs-up"></i> Liked Songs</a>
+    <a data-tab="recent"><i class="fas fa-clock"></i> Recent</a>
+    
+    <div class="mobile-auth-section" id="mobile-auth-section">
+      <a href="/login" class="mobile-login-btn"><i class="fas fa-sign-in-alt"></i> Sign In</a>
+      <a href="/register" class="mobile-signup-btn"><i class="fas fa-user-plus"></i> Sign Up</a>
+    </div>
+  </div>
+
+  <!-- Mobile Search -->
+  <div class="mobile-search-container" id="mobile-search-container">
+    <form class="mobile-search-form" id="mobile-search-form">
+      <input type="text" class="mobile-search-input" id="mobile-search-input" placeholder="Search for songs, artists...">
+      <button type="button" class="mobile-search-close" id="mobile-search-close">
+        <i class="fas fa-times"></i>
+      </button>
+    </form>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-container">
+    <div class="music-content">
+      <div class="welcome-section">
+        <h2 id="greeting-text">Good afternoon</h2>
+        <p>What would you like to listen to today?</p>
+      </div>
+      
+      <div class="tabs">
+        <button class="tab-button active" data-tab="recommended">Recommended</button>
+        <button class="tab-button" data-tab="all">All Songs</button>
+        <button class="tab-button" data-tab="favorites">Liked Songs</button>
+        <button class="tab-button" data-tab="recent">Recent</button>
+      </div>
+      
+      <!-- Recommended Tab -->
+      <div id="recommended-tab" class="tab-content active">
+        <h3 class="section-title"><i class="fas fa-star"></i> Recommended For You</h3>
+        <div class="playlist-container" id="recommended-songs">
+          <div class="loader"><i class="fas fa-spinner fa-spin"></i> Loading recommendations...</div>
+        </div>
+        
+        <h3 class="section-title"><i class="fas fa-fire"></i> Trending Now</h3>
+        <div class="playlist-container" id="trending-songs">
+          <div class="loader"><i class="fas fa-spinner fa-spin"></i> Loading trending songs...</div>
+        </div>
+      </div>
+      
+      <!-- All Songs Tab -->
+      <div id="all-tab" class="tab-content">
+        <h3 class="section-title"><i class="fas fa-music"></i> All Songs</h3>
+        <div class="playlist-container" id="all-songs">
+          <div class="loader"><i class="fas fa-spinner fa-spin"></i> Loading all songs...</div>
+        </div>
+      </div>
+      
+      <!-- Liked Songs Tab -->
+      <div id="favorites-tab" class="tab-content">
+        <h3 class="section-title"><i class="fas fa-thumbs-up"></i> Liked Songs</h3>
+        <div class="playlist-container" id="favorites-songs">
+          <div class="loader"><i class="fas fa-spinner fa-spin"></i> Loading liked songs...</div>
+        </div>
+      </div>
+      
+      <!-- Recent Songs Tab -->
+      <div id="recent-tab" class="tab-content">
+        <h3 class="section-title"><i class="fas fa-clock"></i> Recently Played</h3>
+        <div class="playlist-container" id="recent-songs">
+          <div class="loader"><i class="fas fa-spinner fa-spin"></i> Loading recent songs...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Now Playing Bar -->
+  <div class="now-playing-bar hidden" id="now-playing-bar">
+    <div class="song-info">
+      <img src="" alt="Now Playing" id="mobile-song-image" loading="lazy">
+      <div class="song-text">
+        <h4 class="now-playing-title">No song selected</h4>
+        <p class="now-playing-artist">-</p>
+      </div>
+    </div>
+    
+    <div class="mobile-controls">
+      <button class="mobile-play-btn" id="mobile-play-btn">
+        <i class="fas fa-play"></i>
+      </button>
+      <button class="mobile-skip-btn" id="mobile-skip-btn">
+        <i class="fas fa-step-forward"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Expanded Player View -->
+  <div class="player-overlay" id="player-overlay"></div>
+  <div class="player-expanded" id="player-expanded">
+    <div class="player-header">
+      <button class="minimize-player" id="minimize-player">
+        <i class="fas fa-chevron-down"></i>
+      </button>
+      <button class="like-expanded" id="like-expanded">
+        <i class="far fa-thumbs-up"></i>
+      </button>
+    </div>
+    
+    <div class="album-art-expanded">
+      <img src="" alt="Album Art" id="expanded-album-art" loading="lazy">
+    </div>
+    
+    <div class="song-info-expanded">
+      <h2 id="expanded-song-title">No song selected</h2>
+      <p id="expanded-song-artist">-</p>
+    </div>
+    
+    <div class="progress-container-expanded">
+      <div class="time-display-expanded">
+        <span class="current-time-expanded" id="current-time-expanded">0:00</span>
+        <span class="duration-expanded" id="duration-expanded">0:00</span>
+      </div>
+      <div class="progress-bar-expanded" id="progress-bar-expanded">
+        <div class="progress-expanded" id="progress-expanded"></div>
+      </div>
+    </div>
+    
+    <div class="controls-expanded">
+      <button class="control-btn-expanded shuffle-expanded" id="shuffle-expanded">
+        <i class="fas fa-random"></i>
+      </button>
+      <button class="control-btn-expanded prev-expanded" id="prev-expanded">
+        <i class="fas fa-step-backward"></i>
+      </button>
+      <button class="play-pause-expanded" id="play-pause-expanded">
+        <i class="fas fa-play"></i>
+      </button>
+      <button class="control-btn-expanded next-expanded" id="next-expanded">
+        <i class="fas fa-step-forward"></i>
+      </button>
+      <button class="control-btn-expanded repeat-expanded" id="repeat-expanded">
+        <i class="fas fa-redo"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Tunexa. All rights reserved.</p>
+  </footer>
+
+  <script src="/public/js/mobile.js"></script>
+</body>
+</html>
