@@ -177,18 +177,18 @@ FACEBOOK_CLIENT_SECRET=YOUR_APP_SECRET
 
 Berikut beberapa tampilan dari aplikasi:
 
-### 🎵 Halaman Utama
+### 🎵 Halaman Desktop
 
 <div align="center">
   <img src="screenshot/desktop.png" alt="Tampilan Desktop" width="45%">
-  <img src="screenshot/mobile.png" alt="Tampilan Mobile" width="45%">
+  <img src="screenshot/play-desktop.png" alt="Pemutar Desktop" width="45%">
 </div>
 
-### 🎧 Halaman Pemutar Lagu
+### 🎧 Halaman PMobile
 
 <div align="center">
-  <img src="screenshot/play-desktop.png" alt="Pemutar Desktop" width="45%">
   <img src="screenshot/play-mobile.png" alt="Pemutar Mobile" width="45%">
+  <img src="screenshot/mobile.png" alt="Tampilan Mobile" width="45%">
 </div>
 
 ### 🛠️ Halaman Admin Panel
