@@ -36,7 +36,7 @@ Aplikasi web musik berbasis **Flask** Python yang memungkinkan pengguna untuk me
    cd web-music
 ````
 
-3. **Import table ke database**
+2. **Import table ke database**
 
    ```bash
    #bisa langsung/lebih mudah di phpmyadmin
@@ -47,7 +47,7 @@ Aplikasi web musik berbasis **Flask** Python yang memungkinkan pengguna untuk me
    mysql -u root -p musik_app < musik_app.sql
    ```
 
-2. **Buat dan aktifkan virtual environment**
+3. **Buat dan aktifkan virtual environment**
 
    ```bash
    python3 -m venv venv
@@ -56,15 +56,15 @@ Aplikasi web musik berbasis **Flask** Python yang memungkinkan pengguna untuk me
    venv\Scripts\activate   # di Windows
    ```
 
-3. **Instal semua dependencies**
+4. **Instal semua dependencies**
 
    ```bash
    pip install -r requirements.txt
    ```
 
-4. **Edit file `.env`**
+5. **Edit file `.env`**
 
-5. **Jalankan aplikasinya**
+6. **Jalankan aplikasinya**
 
    ```bash
    python server.py
